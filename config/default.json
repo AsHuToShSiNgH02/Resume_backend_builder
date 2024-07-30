@@ -1,6 +1,7 @@
 {
     "mongoURI": "mongodb://localhost:27017",
     "jwtSecret": "your-jwt-secret",
-    "port": 5000
+    "port": 5000,
+    "apiKey": "yOPENAI_API_KEY=sk-proj-bB7KhnlDPBpxvgo6aZvdT3BlbkFJt9oDJVPyKTZtdPq9LaJy"
   }
   
