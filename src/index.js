@@ -1,21 +1,26 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
-const bodyParser = require('body-parser');
+const resumeRoutes = require('./routes/resume');
+const authRoutes = require('./routes/auth');
 
 const app = express();
-const PORT = config.get('port')
+const PORT = config.get('port');
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/test')
-  .then(() => console.log('MongodbConnected!'));
+app.use('/api/auth', authRoutes);
+app.use('/api/resume', resumeRoutes);
 
-app.get('/' , (res, req) => {
-    res.send('API is running');
+mongoose.connect(config.get('mongoURI'), {
+})
+  .then(() => console.log('MongoDB Connected!'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+app.get('/', (req, res) => {
+  res.send('API is running');
 });
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-})
+  console.log(`Server is running on port ${PORT}`);
+});

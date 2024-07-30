@@ -6,14 +6,16 @@ const { generateContent, generateATSContent } = require('../services/aiService')
 
 // Create Resume
 router.post('/', authMiddleware, async (req, res) => {
-  const { userId, personalInfo, workExperience, education, skills, projects, socialLinks } = req.body;
-  try {
-    const resume = await createResume({ userId, personalInfo, workExperience, education, skills, projects, socialLinks });
-    res.json(resume);
-  } catch (error) {
-    res.status(500).send('Server error');
-  }
+    const { userId, personalInfo, workExperience, education, skills, projects, socialLinks } = req.body;
+    try {
+      const resume = await createResume({ userId, personalInfo, workExperience, education, skills, projects, socialLinks });
+      res.json(resume);
+    } catch (error) {
+      console.error('Create Resume Error:', error.message);
+      res.status(500).send('Server error');
+    }
 });
+  
 
 // Get Resumes by User ID
 router.get('/', authMiddleware, async (req, res) => {
@@ -63,45 +65,42 @@ router.delete('/:id', authMiddleware, async (req, res) => {
 
 // Create Resume with AI-generated content
 router.post('/generate', authMiddleware, async (req, res) => {
-    const { userId, personalInfo, workExperience, education, skills, projects, socialLinks } = req.body;
-    try {
-      // Example prompts for content generation
-      const personalInfoPrompt = `Generate a professional summary for a resume based on the following personal information: ${personalInfo}`;
-      const workExperiencePrompt = `Generate detailed work experience descriptions based on the following: ${workExperience}`;
-      const educationPrompt = `Generate education section content based on the following details: ${education}`;
-      const skillsPrompt = `Generate skills section content based on the following skills: ${skills}`;
-      const projectsPrompt = `Generate project descriptions based on the following details: ${projects}`;
-  
-      // Generate and optimize content using AI
-      const generatedPersonalInfo = await generateContent(personalInfoPrompt);
-      const optimizedPersonalInfo = await generateATSContent(generatedPersonalInfo);
-  
-      const generatedWorkExperience = await generateContent(workExperiencePrompt);
-      const optimizedWorkExperience = await generateATSContent(generatedWorkExperience);
-  
-      const generatedEducation = await generateContent(educationPrompt);
-      const optimizedEducation = await generateATSContent(generatedEducation);
-  
-      const generatedSkills = await generateContent(skillsPrompt);
-      const optimizedSkills = await generateATSContent(generatedSkills);
-  
-      const generatedProjects = await generateContent(projectsPrompt);
-      const optimizedProjects = await generateATSContent(generatedProjects);
-  
-      // Create the resume with generated and optimized content
-      const resume = await createResume({
-        userId,
-        personalInfo: optimizedPersonalInfo,
-        workExperience: optimizedWorkExperience,
-        education: optimizedEducation,
-        skills: optimizedSkills,
-        projects: optimizedProjects,
-        socialLinks
-      });
-      res.json(resume);
-    } catch (error) {
-      res.status(500).send('Server error');
-    }
+  const { userId, personalInfo, workExperience, education, skills, projects, socialLinks } = req.body;
+  try {
+    const personalInfoPrompt = `Generate a professional summary for a resume based on the following personal information: ${personalInfo}`;
+    const workExperiencePrompt = `Generate detailed work experience descriptions based on the following: ${workExperience}`;
+    const educationPrompt = `Generate education section content based on the following details: ${education}`;
+    const skillsPrompt = `Generate skills section content based on the following skills: ${skills}`;
+    const projectsPrompt = `Generate project descriptions based on the following details: ${projects}`;
+
+    const generatedPersonalInfo = await generateContent(personalInfoPrompt);
+    const optimizedPersonalInfo = await generateATSContent(generatedPersonalInfo);
+
+    const generatedWorkExperience = await generateContent(workExperiencePrompt);
+    const optimizedWorkExperience = await generateATSContent(generatedWorkExperience);
+
+    const generatedEducation = await generateContent(educationPrompt);
+    const optimizedEducation = await generateATSContent(generatedEducation);
+
+    const generatedSkills = await generateContent(skillsPrompt);
+    const optimizedSkills = await generateATSContent(generatedSkills);
+
+    const generatedProjects = await generateContent(projectsPrompt);
+    const optimizedProjects = await generateATSContent(generatedProjects);
+
+    const resume = await createResume({
+      userId,
+      personalInfo: optimizedPersonalInfo,
+      workExperience: optimizedWorkExperience,
+      education: optimizedEducation,
+      skills: optimizedSkills,
+      projects: optimizedProjects,
+      socialLinks
+    });
+    res.json(resume);
+  } catch (error) {
+    res.status(500).send('Server error');
+  }
 });
 
 module.exports = router;

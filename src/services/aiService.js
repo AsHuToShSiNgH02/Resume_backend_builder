@@ -2,14 +2,14 @@ const axios = require('axios');
 const config = require('config');
 
 const apiKey = config.get('openAI.apiKey');
-const baseURL = 'https://api.openai.com/v1/completions'; // Update with the correct endpoint if different
+const baseURL = 'https://api.openai.com/v1/completions';
 
 const generateContent = async (prompt) => {
   try {
     const response = await axios.post(baseURL, {
-      model: 'text-davinci-003', // Choose the model according to your needs
+      model: 'text-davinci-003',
       prompt,
-      max_tokens: 150, // Adjust based on your requirements
+      max_tokens: 150,
     }, {
       headers: {
         'Authorization': `Bearer ${apiKey}`,
@@ -24,8 +24,8 @@ const generateContent = async (prompt) => {
 };
 
 const generateATSContent = async (content) => {
-    const atsPrompt = `Optimize the following resume content for ATS: ${content}`;
-    return await generateContent(atsPrompt);
+  const atsPrompt = `Optimize the following resume content for ATS: ${content}`;
+  return await generateContent(atsPrompt);
 };
-  
+
 module.exports = { generateContent, generateATSContent };

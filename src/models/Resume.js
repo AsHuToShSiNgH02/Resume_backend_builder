@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ResumeSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   personalInfo: {
     name: { type: String, required: true },
     address: { type: String },
