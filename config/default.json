@@ -1,8 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://ashutoshin2003:UcsXBubgV2VYB4Fk@cluster0.dztejwe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0",
-  "jwtSecret": "your_jwt_secret",
-  "port": 5000,
-  "openAI": {
-    "apiKey": "ysk-proj-bB7KhnlDPBpxvgo6aZvdT3BlbkFJt9oDJVPyKTZtdPq9LaJy"
-  }
-}
