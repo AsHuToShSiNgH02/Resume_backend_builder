@@ -1,7 +1,9 @@
 {
     "mongoURI": "mongodb://localhost:27017",
-    "jwtSecret": "your-jwt-secret",
+    "jwtSecret": "jwt-secret",
     "port": 5000,
-    "apiKey": "yOPENAI_API_KEY=sk-proj-bB7KhnlDPBpxvgo6aZvdT3BlbkFJt9oDJVPyKTZtdPq9LaJy"
-  }
+    "openAI": {
+      "apiKey": "your-api-key-here"
+    }
+}
   
